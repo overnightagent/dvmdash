@@ -6,6 +6,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{% static 'js/loading.js' %}"></script>
 <style>
     .select2-container--default .select2-selection--single,
     .select2-container--default .select2-selection--single .select2-selection__rendered,
@@ -38,6 +39,37 @@
     .select2-container--default.select2-container--open .select2-selection--single,
     .select2-container--default.select2-container--focus .select2-selection--single {
         border-color: #6c757d !important;
+    }
+
+    #loading-spinner {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .loading-text {
+        color: white;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .loading-text.error {
+        color: #ff6b6b;
+        text-align: center;
+        max-width: 80%;
+        display: none;
     }
 </style>
 {% endblock %}
@@ -213,15 +245,14 @@
 
     {%  endif %}
 
-    <script>
-function redirectToDVM() {
-    var selectedValue = document.getElementById('dvm-select').value;
-    if (selectedValue) {
-        window.location.href = '/dvm/' + selectedValue;
-        return false; // Prevent the form from submitting normally
-    }
-    return false; // If no value is selected, don't submit the form
-}
-</script>
+    <!-- Loading Spinner -->
+    <div id="loading-spinner">
+        <div class="d-flex flex-column align-items-center">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="loading-text">Loading DVM data...</div>
+        </div>
+    </div>
 
 {% endblock %}
